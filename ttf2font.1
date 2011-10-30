@@ -1,0 +1,120 @@
+.TH TTF2FONT
+.SH NAME
+TTF2font \- Utility program designed to create font bitmaps for Cube Engine games
+.SH SYNOPSIS
+.B ttf2font
+[
+.B \-?
+]
+[
+.BI \-h homedir
+]
+[
+.BI \-n outname
+]
+[
+.BI \-i imgsize
+]
+[
+.BI \-s fonsize
+]
+[
+.BI \-p padsize
+]
+[
+.BI \-d shdsize
+]
+[
+.BI \-o {0|1}
+]
+[
+.BI \-g {0..3}
+]
+[
+.BI \-q {0..2}
+]
+[
+.BI \-c {0..9}
+]
+.BI \-f fontfile
+|
+.I fontfile
+.SH DESCRIPTION
+TTF2Font is a utility program designed to create font bitmaps for Cube Engine games, it works by taking a Truetype font and building it into a set of coordinates in an image. It was created by Quinton "quin" Reeves and Lee "eihrul" Salzman, to assist Joshua L. "verbalshadow" Blocher in his creation of content for Blood Frontier.
+.PP
+The program will create two files upon proper execution, based on the name of the font you provide it. Should you wish to use this as your default font in game, you will need to rename the config file "font.cfg" (and optionally, rename the image "font.png") and then update the config file accordingly. The font will not work in the game as output by the program, you must edit it.
+.SH OPTIONS
+.TP
+.B \-?
+Shows the usage help for the program.
+.TP
+.BI -h homedir
+Sets the home directory to
+.IR homedir ,
+defaults to the current directory ("."). This is an alternative location in which to look for files, and also output the files the program creates.
+.TP
+.BI \-n outname
+Provides the name of the output as
+.IR outname ,
+defaults to "default". The file names, and "font name" will be named with this.
+.TP
+.BI \-i imgsize
+Sets the initial dimensions for the generated image to
+.IR imgsize ,
+defaults to "512". If the program exceeds this size it will increase this value until it is able to produce a working image. Images may only be powers of two in size, if it is not, the program will adjust it automatically.
+.TP
+.BI \-s fonsize
+Defines the point size of the font to use to
+.IR fonsize ,
+defaults to "56".
+.TP
+.BI \-p padsize
+Adds
+.I padsize
+pixels of padding around each character, defaults to "1".  This is useful if pixels "bleed" into the characters around it. The generated dimensions of each character will not include this space when displayed in game.
+.TP
+.BI \-d shdsize
+Create a shadow behind each character with an offset of
+.IR shadowoffset ,
+defaults to "2". This helps make characters more readable when the background is bright, while also creating a nice depth effect.
+.TP
+.BI \-o {0|1}
+Use an outline around the entire character for a shadow if set to "1", defaults to "1". This uses the depth shadow argument to determine its size.
+.TP
+.BI \-g {0..3}
+Sets the game which you are making the font for, defaults to "0" (no game). Valid values are:
+.IP
+   * 0: No game, neutral file output which must be edited
+   * 1: Sauerbraten (and derivatives)
+   * 2: AssaultCube
+   * 3: Blood Frontier/Red Eclipse
+.TP
+.BI \-q {0..2}
+Makes Truetype fonts render with specified quality, defaults to "2". A value of "2" will antialias characters it renders, "1" will do a simple blend on them, while "0" will not enhance them at all.
+.TP
+.BI \-c {0..9}
+Compresses the generated PNG image at given level, defaults to "1" (or "Best Speed"). Higher values will compress the image more at the expense of longer loading times.
+.TP
+.BI \-f fontfile " | " fontfile
+Specifies the path to the Truetype font to use. This argument is required for proper operation.
+.SH EXAMPLES
+.B ttf2font -nmyfontbitmap myfont.ttf -d10 -o0 -g3
+.RS 4
+Creates a font bitmap with the name and filename "myfontbitmap" from the original font myfont.ttf, with a distinct drop shadow and a configfile setup to be compatible with Blood Frontier or Red Eclipse.
+.RE
+.SH AUTHORS
+TTF2font was created by Quinton "quin" Reeves and Lee "eihrul" Salzman.
+.PP
+This manpage was adapted from the included readme.txt by Martin Erik Werner <martinerikwerner@gmail.com>
+.SH HISTORY
+v0.1
+    * initial release
+
+v0.2
+    * alpha blending fixes
+    * -w arg to supress win32 msg boxes
+
+v0.3
+    * -o arg to use an outline around the glyph
+    * -g arg to set output game format
+    * -n arg to set the name of the output
