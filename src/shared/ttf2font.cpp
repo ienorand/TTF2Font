@@ -418,7 +418,7 @@ int main(int argc, char *argv[])
 
 	if(retcode < 0 && fonname)
 	{
-		char *dot = strpbrk(fonname, ".");
+		const char *dot = strpbrk(fonname, ".");
 		if(dot) s_strncpy(cutname, fonname, dot-fonname+1);
 		else s_strcpy(cutname, fonname);
 
