@@ -379,7 +379,7 @@ void makefont()
 
 void usage()
 {
-	conoutf("%s usage:\n\n\t-?\t\tthis help\n\t-h<S>\t\thome dir, output directory\n\t-g<N[0..3]>\t\tgame type\n\t-f<S>\t\tfont file\n\t-n<S>\t\toutput name\n\t-i<N>\t\timage size\n\t-s<N>\t\tfont size\n\t-p<N>\t\tchar padding\n\t-d<N>\t\tshadow depth\n\t-o<N[0..1]>\t\toutward shadow\n\t-q<N[0..2]>\trender quality\n\t-c<N[0..9]>\tcompress level", program);
+	conoutf("%s usage:\n\n\t-?\t\tthis help\n\t-h<S>\t\thome dir, output directory\n\t-g<N[0..3]>\tgame type\n\t-f<S>\t\tfont file\n\t-n<S>\t\toutput name\n\t-i<N>\t\timage size\n\t-s<N>\t\tfont size\n\t-p<N>\t\tchar padding\n\t-d<N>\t\tshadow depth\n\t-o<N[0..1]>\toutward shadow\n\t-q<N[0..2]>\trender quality\n\t-c<N[0..9]>\tcompress level", program);
 }
 
 int main(int argc, char *argv[])
