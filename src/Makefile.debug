@@ -1,0 +1,96 @@
+CXXOPTFLAGS= -fsigned-char -ffast-math -fno-strict-aliasing -ggdb3
+INCLUDES= -Ishared -Iengine -Ifpsgame -Ienet/include -I/usr/X11R6/include `sdl-config --cflags` -Iinclude
+CXXFLAGS= -Wall $(CXXOPTFLAGS) $(INCLUDES)
+
+CLIENT_LIBS=-Lenet -lenet -L/usr/X11R6/lib `sdl-config --libs` -lSDL_image -lSDL_mixer -lpng -lz -lGL -lGLU
+ifeq ($(shell uname -s),Linux)
+CLIENT_LIBS+= -lrt
+endif
+CLIENT_OBJS= \
+	shared/tools.o \
+	shared/geom.o \
+	engine/3dgui.o \
+	engine/bih.o \
+	engine/client.o	\
+	engine/command.o \
+	engine/console.o \
+	engine/decal.o \
+	engine/dynlight.o \
+	engine/glare.o \
+	engine/grass.o \
+	engine/lightmap.o \
+	engine/main.o \
+	engine/material.o \
+	engine/menus.o \
+	engine/normal.o	\
+	engine/octa.o \
+	engine/octaedit.o \
+	engine/octarender.o \
+	engine/physics.o \
+	engine/pvs.o \
+	engine/rendergl.o \
+	engine/rendermodel.o \
+	engine/renderparticles.o \
+	engine/rendersky.o \
+	engine/rendertext.o \
+	engine/renderva.o \
+	engine/server.o	\
+	engine/serverbrowser.o \
+	engine/shader.o \
+	engine/shadowmap.o \
+	engine/sound.o \
+	engine/texture.o \
+	engine/water.o \
+	engine/world.o \
+	engine/worldio.o \
+	fpsgame/fps.o 
+
+SINCLUDES= -Ishared -Iengine -Ifpsgame -Ienet/include
+SCXXFLAGS= -Wall -DSTANDALONE $(CXXOPTFLAGS) $(SINCLUDES)
+
+SERVER_LIBS=-Lenet -lenet -lz
+SERVER_OBJS= \
+	shared/tools-standalone.o \
+	engine/command-standalone.o \
+	engine/server-standalone.o \
+	fpsgame/fps-standalone.o
+
+DINCLUDES= -Ishared -Iengine -Ifpsgame -Ienet/include
+DCXXFLAGS= -Wall -DSTANDALONE -DMASTERSERVER $(CXXOPTFLAGS) $(DINCLUDES)
+
+DAEMON_LIBS=-Lenet -lenet -lz
+DAEMON_OBJS= \
+	shared/tools-daemon.o \
+	engine/command-daemon.o \
+	engine/master-daemon.o \
+	engine/server-daemon.o \
+	fpsgame/fps-daemon.o
+
+TINCLUDES= -Ishared `sdl-config --cflags`
+TCXXFLAGS= -Wall -DTTF2FONT $(CXXOPTFLAGS) $(TINCLUDES)
+
+TTF_LIBS= -L/usr/X11R6/lib `sdl-config --libs` -lSDL_image -lSDL_ttf -lpng -lz
+TTF_OBJS= \
+	shared/tools-ttf.o \
+	shared/ttf2font-ttf.o
+
+default: all
+
+clean: clean-ttf
+
+clean-ttf:
+	@rm -fv $(TTF_OBJS) ttf2font
+
+%-ttf.o:
+	$(CXX) $(TCXXFLAGS) -c -o $@ $(subst -ttf.o,.cpp,$@)
+
+ttf: $(TTF_OBJS)
+	$(CXX) $(TCXXFLAGS) -o ttf2font $(TTF_OBJS) $(TTF_LIBS)
+
+install-ttf: ttf
+	cp -v ttf2font ../ttf2font
+	chmod +x ../ttf2font
+
+install: install-ttf
+
+all: ttf
