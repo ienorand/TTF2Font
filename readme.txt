@@ -119,7 +119,7 @@ v0.3
     * -g arg to set output game format
     * -n arg to set the name of the output
 
-v0.3.1
+v0.3.1 UNRELEASED
     * GitHub repo
     * Copyright clarification & cleanup
     * Manpage
