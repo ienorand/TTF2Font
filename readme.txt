@@ -118,3 +118,8 @@ v0.3
     * -o arg to use an outline around the glyph
     * -g arg to set output game format
     * -n arg to set the name of the output
+
+v0.3.1
+    * GitHub repo
+    * Copyright clarification & cleanup
+    * Manpage
